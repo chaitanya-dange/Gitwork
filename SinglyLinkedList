@@ -1,0 +1,240 @@
+package z3SinglyLinkedList;
+
+import java.util.Stack;
+
+public class SinglyLL {
+    private  Node head;
+
+    public SinglyLL() {
+        this.head = null;
+    }
+
+
+
+    //ADDING NODE AT LAST
+    public boolean addLast(int data){
+        Node newnode= new Node(data);
+
+        if(newnode== null){
+            return  false;
+        }
+
+        if(head == null){
+            head= newnode;
+            return true;
+        }
+        // locate the last node.
+        Node temp= head;
+        while(temp.getNext()!=null){
+            temp= temp.getNext();
+        }
+
+        //make newnode next of last node.
+        temp.setNext(newnode);
+        return  true;
+
+    }
+
+    //DELETING LAST NODE
+
+    public  boolean deleteLast(){
+        if(head==null){
+            return false;
+
+        }
+
+        if(head.getNext()== null){
+            head=null;
+            return  true;
+        }
+
+        Node temp=head;
+        while(temp.getNext().getNext()!=null){
+            temp=temp.getNext();
+        }
+        temp.setNext(null);
+
+        return true;
+    }
+
+    // DISPLAY
+    public void display(){
+        Node temp=head;
+        //here in a while loop ,why temp==null won't work.
+        while(temp!=null){
+            System.out.println(temp.getData());
+            temp=temp.getNext();
+        }
+    }
+
+
+
+    //INSERTING NODE AT START
+    public boolean addAtStart(int data){
+        Node newnode=new Node(data);
+        if(newnode ==null){
+            return false;
+        }
+
+        if(head==null){
+            head=newnode;
+            return true;
+
+        }
+        if(head!=null){
+            newnode.setNext(head);
+            head=newnode;
+            return true;
+        }
+        return false;
+    }
+
+
+    //DELETING NODE AT START.
+    public boolean deleteAtStart(){
+        if(head==null){
+            return false;
+        }
+
+        Node temp=head;
+        if(head.getNext()!=null){
+            head=temp.getNext();
+            temp=null;
+        }
+
+//        Node temp=head;
+//
+//        if(head.getNext()!=null){
+//            temp.setNext(head);
+//            head=null;
+//            return true;}
+        // head.setNext(head);
+
+        return  true;
+    }
+
+    //INSERTING NODE BY POSITION.
+        public boolean insertByPosition(int data, int position){
+        Node newnode=new Node(data);
+        if(position<=0){
+            return  false;
+        }
+         int counter=1;
+        if(head==null && position==1){
+            head = newnode;
+            return  true;
+        }
+        if(head!=null && position ==1){
+            newnode.setNext(head);
+            head=newnode;
+            return  true;
+        }
+        Node temp=head;
+        while(temp.getNext().getNext()!=null && counter!=position-1){
+            counter=counter+1;
+            temp=temp.getNext();
+
+
+        }
+            // by vishal sir logic
+//            Node prev = head;
+//            for(int i = 1; i < position - 1; i++) {
+//                prev = prev.getNext();
+//                if(prev.getNext()    == null) {
+//                    return false;
+//                }
+//            }
+        newnode.setNext(temp.getNext());
+        temp.setNext(newnode);
+        return true;
+
+        }
+
+        public boolean deleteByPosition(int position){
+        if (position<=0 || head==null){
+            return false;
+        }
+
+        if(position==1 && head.getNext()==null ){
+            head=null;
+        }
+
+        if(position ==1 ){
+            head=head.getNext();
+        }
+        Node temp=head;
+        for(int i=1;i<position-1;i++){
+            temp=temp.getNext();
+            if(temp.getNext()==null){
+                return false;
+            }
+        }
+            Node del = temp.getNext();
+            temp.setNext(del.getNext());
+
+            return true;
+        }
+
+        //DELETE BY VALUE
+        public boolean deleteByValue(int data){
+        if(head==null){
+            return false;
+        }
+        if(head.getData()==data){
+            head=head.getNext();
+            return true;
+        }
+           Node prev=head,del=head;
+        while(prev.getData()!=data){
+            prev=del;
+            del=del.getNext();
+            if(del==null){
+                return false;
+            }
+            return true;
+        }
+
+        return true;
+        }
+
+        //DISPLAY REVERSE
+        public void displayReverse(){
+        Stack stack=new Stack();
+        if(head==null){
+            System.out.println("Linkedlist is null");
+        }
+        Node temp=head;
+        while(temp!=null){
+            stack.push(temp);
+            temp=temp.getNext();
+        }
+
+        while(!stack.isEmpty()){
+            Node temp1=(Node) stack.pop();
+
+            System.out.println(temp1.getData()+" ");
+        }
+        }
+
+
+        //REVERSE THE HEAD
+        public void reverse(){
+        Node n1=head,n2=head.getNext();
+        Node n3;
+
+        while(n2 !=null){
+            n3=n2.getNext();
+            n2.setNext(n1);
+            n1=n2;
+            n2=n3;
+
+        }
+        head.setNext(null);
+        head=n1;
+
+
+
+        }
+
+
+}
